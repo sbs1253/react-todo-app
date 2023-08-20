@@ -42,6 +42,7 @@ export default class App extends Component {
     // console.log(e.target.value, this.state.value);
   };
   handleSubmit = (e) => {
+    // submit 시 리로드 방지
     e.preventDafault();
 
     let newTodo = {
