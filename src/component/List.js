@@ -1,22 +1,6 @@
 import React from 'react';
 
 export default function Lists({ setTodoData, todoData }) {
-  const btnstyle = {
-    float: 'right',
-    border: 'none',
-    borderRadius: '50%',
-    padding: '5px 10px',
-    color: '#fff',
-    cursor: 'pointer',
-  };
-  const getStyle = (completed) => {
-    return {
-      padding: '10px',
-      borderBottom: '1px #ccc dotted',
-      textDecoration: completed ? 'line-through' : 'none',
-    };
-  };
-
   const handleClick = (id) => {
     const newTodoData = todoData.filter((data) => data.id !== id);
     setTodoData(newTodoData);
@@ -35,18 +19,30 @@ export default function Lists({ setTodoData, todoData }) {
   return (
     <div>
       {todoData.map((data) => (
-        <div style={getStyle(data.completed)} key={data.id}>
-          <p>
+        <div
+          key={data.id}
+          className='flex m-3 justify-between items-center p-3 border rounded bg-slate-50'
+        >
+          <div>
             <input
               type='checkbox'
               defaultChecked={false}
               onChange={() => handleComplete(data.id)}
             />
-            {data.title}
-            <button style={btnstyle} onClick={() => handleClick(data.id)}>
+            <span
+              className={(data.completed ? 'line-through' : undefined, 'm-3')}
+            >
+              {data.title}
+            </span>
+          </div>
+          <div>
+            <button
+              onClick={() => handleClick(data.id)}
+              className='border rounded px-2 bg-blue-50 text-blue-400'
+            >
               X
             </button>
-          </p>
+          </div>
         </div>
       ))}
     </div>
