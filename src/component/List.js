@@ -21,7 +21,7 @@ export default function Lists({ setTodoData, todoData }) {
     <div>
       <DragDropContext>
         <Droppable droppableId='to-dos'>
-          {(provided) => {
+          {(provided) => (
             <div {...provided.droppableProps} ref={provided.innerRef}>
               {todoData.map((data, index) => (
                 <Draggable
@@ -32,13 +32,13 @@ export default function Lists({ setTodoData, todoData }) {
                   {(provided, snapshot) => (
                     <div
                       key={data.id}
-                      className={`${
-                        snapshot ? 'selected' : 'not-selected'
-                      }flex m-3 justify-between items-center p-3
-                      border rounded bg-slate-50`}
                       {...provided.draggableProps}
                       ref={provided.innerRef}
                       {...provided.dragHandleProps}
+                      className={`${
+                        snapshot ? 'selected' : 'not-selected'
+                      } flex m-3 justify-between items-center p-3
+                      border rounded bg-slate-50`}
                     >
                       <div>
                         <input
@@ -69,8 +69,8 @@ export default function Lists({ setTodoData, todoData }) {
                 </Draggable>
               ))}
               {provided.placeholder}
-            </div>;
-          }}
+            </div>
+          )}
         </Droppable>
       </DragDropContext>
     </div>
