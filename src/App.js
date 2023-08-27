@@ -15,7 +15,6 @@ export default function App() {
       completed: false,
     },
   ]);
-
   const [value, setValue] = useState('');
 
   const handleSubmit = (e) => {

@@ -16,10 +16,23 @@ export default function Lists({ setTodoData, todoData }) {
     });
     setTodoData(newTodo);
   };
+  const handleEnd = (result) => {
+    // console.log(result);
+    if (!result.destination) return;
 
+    // 리액트 불변성
+    const newTodoData = [...todoData];
+    const [selecttItem] = newTodoData.splice(result.source.index, 1);
+    // *error이유* selecttItem => [selecttItem]
+    // 구조분해 할당으로 splice 아이템을 받아야했음
+    // 안그러면 배열형태로 들어감
+
+    newTodoData.splice(result.destination.index, 0, selecttItem);
+    setTodoData(newTodoData);
+  };
   return (
     <div>
-      <DragDropContext>
+      <DragDropContext onDragEnd={handleEnd}>
         <Droppable droppableId='to-dos'>
           {(provided) => (
             <div {...provided.droppableProps} ref={provided.innerRef}>
@@ -32,11 +45,11 @@ export default function Lists({ setTodoData, todoData }) {
                   {(provided, snapshot) => (
                     <div
                       key={data.id}
-                      {...provided.draggableProps}
                       ref={provided.innerRef}
+                      {...provided.draggableProps}
                       {...provided.dragHandleProps}
                       className={`${
-                        snapshot ? 'selected' : 'not-selected'
+                        snapshot.isDragging ? 'bg-gray-400' : 'bg-slate-50'
                       } flex m-3 justify-between items-center p-3
                       border rounded bg-slate-50`}
                     >
