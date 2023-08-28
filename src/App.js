@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
-import List from './component/List';
 import Form from './component/Form';
+import Lists from './component/Lists';
 export default function App() {
   const [todoData, setTodoData] = useState([
     {
@@ -26,7 +26,6 @@ export default function App() {
       title: value,
       completed: false,
     };
-    console.log(newTodo);
     setTodoData((prev) => [...prev, newTodo]);
     setValue('');
   };
@@ -37,7 +36,7 @@ export default function App() {
         <div className='flex justify-between mb-4 font-bold'>
           <h1>할 일 목록</h1>
         </div>
-        <List todoData={todoData} setTodoData={setTodoData} />
+        <Lists todoData={todoData} setTodoData={setTodoData} />
         <Form handleSubmit={handleSubmit} value={value} setValue={setValue} />
       </div>
     </div>
