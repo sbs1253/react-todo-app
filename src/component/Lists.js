@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import List from './List';
 
 const Lists = React.memo(({ setTodoData, todoData }) => {
+  const [isEditing, setEditing] = useState(false);
+  const [editedTitle, seteditedTitle] = useState('title');
+
   const handleEnd = (result) => {
     // console.log(result);
     if (!result.destination) return;

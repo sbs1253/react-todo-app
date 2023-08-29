@@ -3,6 +3,7 @@ import React from 'react';
 export default function Form({ handleSubmit, value, setValue }) {
   const handleChange = (e) => {
     setValue(e.target.value);
+    // console.log(e.target.value);
   };
   return (
     <form onSubmit={handleSubmit} className='flex justify-between m-3'>
