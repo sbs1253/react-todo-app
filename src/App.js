@@ -1,21 +1,22 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import './App.css';
 import Form from './component/Form';
 import Lists from './component/Lists';
+const initialTodoDate = localStorage.getItem('todoData')
+  ? JSON.parse(localStorage.getItem('todoData'))
+  : [];
 export default function App() {
-  const [todoData, setTodoData] = useState([
-    {
-      id: 1,
-      title: '하이요',
-      completed: false,
-    },
-    {
-      id: 2,
-      title: '고마워요',
-      completed: false,
-    },
-  ]);
+  const [todoData, setTodoData] = useState(initialTodoDate);
   const [value, setValue] = useState('');
+
+  const handleClick = useCallback(
+    (id) => {
+      const newTodoData = todoData.filter((data) => data.id !== id);
+      setTodoData(newTodoData);
+      localStorage.setItem('todoData', JSON.stringify(newTodoData));
+    },
+    [todoData]
+  );
 
   const handleSubmit = (e) => {
     // submit 시 리로드 방지
@@ -27,11 +28,13 @@ export default function App() {
       completed: false,
     };
     setTodoData((prev) => [...prev, newTodo]);
+    localStorage.setItem('todoData', JSON.stringify([...todoData, newTodo]));
     setValue('');
   };
 
   const handleDelete = () => {
     setTodoData([]);
+    localStorage.setItem('todoData', JSON.stringify([]));
   };
 
   return (
@@ -41,7 +44,11 @@ export default function App() {
           <h1>할 일 목록</h1>
           <button onClick={handleDelete}>Delete All</button>
         </div>
-        <Lists todoData={todoData} setTodoData={setTodoData} />
+        <Lists
+          todoData={todoData}
+          setTodoData={setTodoData}
+          handleClick={handleClick}
+        />
         <Form handleSubmit={handleSubmit} value={value} setValue={setValue} />
       </div>
     </div>
